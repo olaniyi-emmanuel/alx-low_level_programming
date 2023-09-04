@@ -1,37 +1,51 @@
-#include "main.h"
 #include <stdlib.h>
+
+/**
+* argstostr - Concatenates all the arguments of the program
+*
+* @ac: Argument total count
+*
+* @av: Pointer to arguments
+*
+* Return: Pointer to concatenated string (SUCCESS) or
+* NULL if @ac == 0 or @av == NULL (FAILURE) or
+* NULL if if insufficient memory was available (FAILURE)
+*/
+
 char *argstostr(int ac, char **av)
 {
-	char *strDup;
-	int i, j, k, size;
+	int i, j;
+	int count = 0;
+	int t_count = 0;
+	char *result;
 
 	if (ac == 0 || av == NULL)
-		return (NULL);
-	size = 0;
-/* count the number of chars in each string */
+		return ('\0');
+
 	for (i = 0; i < ac; i++)
 	{
 		for (j = 0; av[i][j] != '\0'; j++)
-			size++;
-		size++;
+			t_count++;
+
+		t_count++;
 	}
-	size++;
-/* allocate memory for total number of chars and
- * new line for each word
- */
-	strDup = malloc(sizeof(char) * size);
-	if (strDup == NULL)
-		return (NULL);
-	k = 0;
+
+	result = malloc(sizeof(char) * t_count + 1);
+
+	if (result == NULL)
+	{
+		return ('\0');
+	}
+
 	for (i = 0; i < ac; i++)
 	{
 		for (j = 0; av[i][j] != '\0'; j++)
 		{
-			strDup[k++] = av[i][j];
+			result[count++] = av[i][j];
 		}
-		strDup[k++] = '\n';
+		result[count++] = '\n';
 	}
-	strDup[k] = '\0';
-	return (strDup);
-}
 
+	result[t_count] = '\0';
+	return (result);
+}
