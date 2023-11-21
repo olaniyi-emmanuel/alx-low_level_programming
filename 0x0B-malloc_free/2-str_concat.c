@@ -1,33 +1,49 @@
-#include "main.h"
 #include <stdlib.h>
+#include "main.h"
+
+/**
+ * *str_concat - concatenates two strings
+ * @s1: string to concatenate
+ * @s2: other string to concatenate
+ *
+ * Return: pointer to the new string created (Success), or NULL (Error)
+ */
 char *str_concat(char *s1, char *s2)
 {
-	int size; /* Tamaño del string*/
-	int size2; /* Tamañano del segundo string */
-	int i, j; /* Iteradores de bucle */
-	char *array; /* Salida */
+	char *s3;
+	unsigned int i = 0, j = 0, len1 = 0, len2 = 0;
 
-	if (!s1)
-		s1 = ""; /* Devuelve un string vacio */
-	if (!s2)
-		s2 = "";
-	for (size = 0; s1[size] != '\0'; size++) /* leng del string */
-		;
-	for (size2 = 0; s2[size2] != '\0'; size2++) /* leng string */
-		;
-	array = malloc(((size) + (size2 + 1)) * sizeof(char)); /* New memory alloc */
+	while (s1 && s1[len1])
+		len1++;
+	while (s2 && s2[len2])
+		len2++;
 
-	if (!array)
+	s3 = malloc(sizeof(char) * (len1 + len2 + 1));
+	if (s3 == NULL)
+		return (NULL);
+
+	i = 0;
+	j = 0;
+
+	if (s1)
 	{
-		return (NULL); /* Devuelve NULLL si malloc falla */
+		while (i < len1)
+		{
+			s3[i] = s1[i];
+			i++;
+		}
 	}
-	for (i = 0; i < size; i++)
+
+	if (s2)
 	{
-		array[i] = s1[i]; /* Copiamos string en base a string dado por main */
+		while (i < (len1 + len2))
+		{
+			s3[i] = s2[j];
+			i++;
+			j++;
+		}
 	}
-	for (j = 0; j < (size2 + 1); j++)
-	{
-		array[i + j] = s2[j]; /* Copiamos string en base a string dado por main */
-	}
-	return (array); /* Devolvemos string nuevo */
+	s3[i] = '\0';
+
+	return (s3);
 }
